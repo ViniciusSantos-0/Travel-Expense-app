@@ -1,55 +1,56 @@
 package com.example.gastodeviagem
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.NumberFormatException
+import androidx.appcompat.app.AppCompatActivity
+import com.example.gastodeviagem.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        buttonCalculate.setOnClickListener(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.buttonCalculate.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
-        val id = v.id
-        if (id == R.id.buttonCalculate) {
+        if (v.id == R.id.buttonCalculate) {
             calculate()
         }
     }
 
     private fun calculate() {
-        if (validate()) {
-                val distance = editDistance.text.toString().toFloat()
-                val price = editPrice.text.toString().toFloat()
-                val autonomy = editAutonomy.text.toString().toFloat()
+        val distanceStr = binding.editDistance.text.toString()
+        val priceStr = binding.editPrice.text.toString()
+        val autonomyStr = binding.editAutonomy.text.toString()
 
-                val totalValue = (distance * price) / autonomy
+        if (validate(distanceStr, priceStr, autonomyStr)) {
+            val distance = distanceStr.toFloat()
+            val price = priceStr.toFloat()
+            val autonomy = autonomyStr.toFloat()
+            val totalValue = (distance * price) / autonomy
 
-                textTotalValue.text = "R$ ${"%.2f".format(totalValue)}"
-
-        } else if(editAutonomy.text.toString() == "0") {
-                Toast.makeText(
-                    this,
-                    getString(R.string.por_favor_insira_valores_validos),
-                    Toast.LENGTH_LONG
-                ).show()
-            }else{
-                Toast.makeText(
-                    this,
-                    getString(R.string.preencha_todos_os_campos),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-
+            binding.textTotalValue.text = "$ ${"%.2f".format(totalValue)}"
+        } else if (autonomyStr == "0") {
+            Toast.makeText(
+                this,
+                getString(R.string.please_enter_valid_values),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Toast.makeText(this, getString(R.string.fill_in_all_fields), Toast.LENGTH_LONG)
+                .show()
         }
     }
 
-    private fun validate(): Boolean = (editDistance.text.toString() != ""
-            && editAutonomy.text.toString() != "" && editPrice.text.toString() != "" && editAutonomy.text.toString() != "0")
+    private fun validate(dist: String, price: String, auto: String): Boolean {
+        return dist.isNotEmpty() && price.isNotEmpty() && auto.isNotEmpty() && auto != "0"
+    }
 }
