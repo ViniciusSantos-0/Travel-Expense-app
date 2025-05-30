@@ -21,7 +21,8 @@ An Android app to help you calculate your total travel cost based on distance, f
 
 ## 📸 Screenshots
 
-> ![Travel Expense Screenshot](screenshots/travel_expense_screenshot.jpg)
+> <img src="./screenshots/travel_expense_screenshot.jpg" width="200"/>
+
 
 ## 🚀 Getting Started
 
