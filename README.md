@@ -37,6 +37,7 @@ Connect your device or start an emulator.
 Click Run ▶️ to launch the app.
 
 ✅ Requirements
+
 Android Studio (Hedgehog or newer recommended)
 
 JDK 8 or higher
@@ -48,6 +49,7 @@ Android Gradle Plugin 8.5.1
 Internet connection to fetch dependencies
 
 ⚠️ Known Issues
+
 The project is not compatible with AGP versions below 8.0.
 
 kotlin-android-extensions is deprecated. View Binding is used instead.
